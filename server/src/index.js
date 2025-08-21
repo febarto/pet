@@ -187,8 +187,9 @@ app.get('/api/slots', async (req, res) => {
   for (let m = startMin; m + SLOT_MINUTES <= endMin; m += SLOT_MINUTES) {
     const hh = String(Math.floor(m/60)).padStart(2, '0');
     const mm = String(m % 60).padStart(2, '0');
-    slots.push(f"{hh}:{mm}".replace('f', ''));  // quick compose
+    slots.push(`${hh}:${mm}`);
   }
+
 
   const sameDay = await listAppointmentsByDateResource(date, resourceId);
 
