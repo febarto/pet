@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "build": "prisma generate && prisma db push && node prisma/seed.js",
+    "build": "cross-env DATABASE_URL=file:./dev.db prisma generate && cross-env DATABASE_URL=file:./dev.db prisma db push && node prisma/seed.js",
     "dev": "node --watch src/index.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
@@ -21,7 +21,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "prisma": "5.22.0"
+    "prisma": "5.22.0",
+    "cross-env": "^7.0.3"
   },
   "engines": { "node": ">=18" }
 }
