@@ -9,8 +9,8 @@ datasource db {
 
 model Service {
   id              Int      @id @default(autoincrement())
-  name            String
-  priceCents      Int      // store price in cents to avoid decimal headaches in SQLite
+  name            String   @unique   // <- precisa ser único para o upsert por name
+  priceCents      Int
   durationMinutes Int
   active          Boolean  @default(true)
   createdAt       DateTime @default(now())
@@ -18,6 +18,7 @@ model Service {
 
   appointments Appointment[]
 }
+
 
 model Pet {
   id          Int      @id @default(autoincrement())
