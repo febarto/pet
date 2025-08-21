@@ -10,8 +10,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:push": "prisma db push",
-    "seed": "node prisma/seed.js",
-    "postinstall": "prisma generate"
+    "seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
@@ -21,10 +20,6 @@
     "luxon": "^3.4.4",
     "zod": "^3.23.8"
   },
-  "devDependencies": {
-    "prisma": "^5.17.0"
-  },
-  "engines": {
-    "node": ">=18"
-  }
+  "devDependencies": { "prisma": "^5.17.0" },
+  "engines": { "node": ">=18" }
 }
