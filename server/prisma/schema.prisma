@@ -5,14 +5,14 @@ generator client {
 
 // ---------- Banco de dados ----------
 datasource db {
-  provider = "sqlite"                 // para preview no Render/locais
+  provider = "sqlite"                 // Preview e Render Free
   url      = env("DATABASE_URL")      // ex.: file:./dev.db
 }
 
 // ---------- Modelos ----------
 model Service {
   id              Int       @id @default(autoincrement())
-  name            String    @unique          // usado no seed com upsert por nome
+  name            String    @unique          // usado no seed (upsert por nome)
   priceCents      Int
   durationMinutes Int
   active          Boolean   @default(true)
@@ -49,36 +49,27 @@ model Resource {
   appointments Appointment[]
 }
 
-enum AppointmentStatus {
-  PENDING
-  CONFIRMED
-  IN_SERVICE
-  DONE
-  CANCELED
-}
-
 model Appointment {
-  id          Int                @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   clientName  String
   phone       String
   startUTC    DateTime
   endUTC      DateTime
-  dateLocal   String             // YYYY-MM-DD em America/Sao_Paulo
+  dateLocal   String                 // YYYY-MM-DD
   notes       String?
-  status      AppointmentStatus  @default(CONFIRMED)
+  status      String     @default("CONFIRMED")  // PENDING | CONFIRMED | IN_SERVICE | DONE | CANCELED
 
-  service     Service  @relation(fields: [serviceId], references: [id])
+  service     Service    @relation(fields: [serviceId], references: [id])
   serviceId   Int
 
-  pet         Pet?     @relation(fields: [petId], references: [id])
+  pet         Pet?       @relation(fields: [petId], references: [id])
   petId       Int?
 
-  resource    Resource @relation(fields: [resourceId], references: [id])
+  resource    Resource   @relation(fields: [resourceId], references: [id])
   resourceId  Int
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
-  // índice para consultas rápidas por recurso/dia/intervalo
   @@index([resourceId, dateLocal, startUTC, endUTC])
 }
